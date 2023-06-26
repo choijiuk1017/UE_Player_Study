@@ -28,6 +28,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		class UCameraComponent* CameraComp;
 
+	//앞, 뒤로 이동하는 함수
+	void MoveForward(float InputAxis);
+
+	//좌, 위로 이동하는 함수
+	void MoveRight(float InputAxis);
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
