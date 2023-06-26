@@ -31,9 +31,14 @@ protected:
 	//앞, 뒤로 이동하는 함수
 	void MoveForward(float InputAxis);
 
-	//좌, 위로 이동하는 함수
+	//좌, 우로 이동하는 함수
 	void MoveRight(float InputAxis);
 
+	//달리기 시작
+	void BeginSprint();
+
+	//달리기 끝
+	void EndSprint();
 
 public:	
 	// Called every frame
