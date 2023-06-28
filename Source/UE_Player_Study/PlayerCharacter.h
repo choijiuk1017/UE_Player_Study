@@ -16,6 +16,8 @@ private:
 	//쿨타임 관리 변수
 	bool IsDash;
 	
+	float OriginSpeed;
+
 public:
 
 	// Sets default values for this character's properties

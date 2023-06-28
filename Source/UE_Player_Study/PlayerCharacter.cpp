@@ -53,6 +53,8 @@ APlayerCharacter::APlayerCharacter()
 
     //돌진 가능 확인 변수
     IsDash = true;
+
+    OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
 // Called when the game starts or when spawned
@@ -97,12 +99,16 @@ void APlayerCharacter::MoveRight(float AxisValue)
 void APlayerCharacter::BeginSprint()
 {
     GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+
+    OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
 //달리기 종료 함수
 void APlayerCharacter::EndSprint()
 {
     GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+
+    OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
 void APlayerCharacter::DashInput()
@@ -110,8 +116,6 @@ void APlayerCharacter::DashInput()
     if (IsDash)
     {
         Dash();
-
-        GetWorldTimerManager().SetTimer(DashCooldownTimerHandle, this, &APlayerCharacter::EndDash, DashDuration, false);
 
         IsDash = false;
 
@@ -121,12 +125,16 @@ void APlayerCharacter::DashInput()
 
 void APlayerCharacter::Dash()
 {
+    float StartTime = GetWorld()->GetTimeSeconds();
+
+    float EndTime = StartTime + DashDuration;
+
     GetCharacterMovement()->MaxWalkSpeed = DashSpeed; 
 }
 
 void APlayerCharacter::EndDash()
 {
-    GetCharacterMovement()->MaxWalkSpeed = GetClass()->GetDefaultObject<APlayerCharacter>()->GetCharacterMovement()->MaxWalkSpeed;
+    GetCharacterMovement()->MaxWalkSpeed = OriginSpeed;
 }
 
 void APlayerCharacter::ResetDashCooldown()
