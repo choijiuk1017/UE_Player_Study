@@ -55,6 +55,9 @@ APlayerCharacter::APlayerCharacter()
     IsDash = true;
 
     OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
+
+    SpeedIncreaseRate = 500.0f;
+
 }
 
 // Called when the game starts or when spawned
@@ -111,6 +114,7 @@ void APlayerCharacter::EndSprint()
     OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
+//돌진 키 입력 받는 함수
 void APlayerCharacter::DashInput()
 {
     if (IsDash)
@@ -123,24 +127,39 @@ void APlayerCharacter::DashInput()
     }
 }
 
+//돌진 함수
 void APlayerCharacter::Dash()
 {
     float StartTime = GetWorld()->GetTimeSeconds();
 
     float EndTime = StartTime + DashDuration;
+    GetCharacterMovement()->MaxWalkSpeed = 1500.0f;
 
-    GetCharacterMovement()->MaxWalkSpeed = DashSpeed; 
+    IncreaseDashSpeed(GetWorld()->GetDeltaSeconds());
+
+    if (GetCharacterMovement()->MaxWalkSpeed == DashSpeed)
+    {
+        EndDash();
+    }   
+    
 }
 
+//돌진 종료 함수
 void APlayerCharacter::EndDash()
 {
     GetCharacterMovement()->MaxWalkSpeed = OriginSpeed;
 }
 
+//돌진 쿨타임 관련 함수
 void APlayerCharacter::ResetDashCooldown()
 {
     // 쿨타임이 끝났을 때 돌진 가능 상태로 설정
     IsDash = true;
+}
+
+void APlayerCharacter::IncreaseDashSpeed(float DeltaTime) const
+{
+    GetCharacterMovement()->MaxWalkSpeed += SpeedIncreaseRate * DeltaTime;
 }
 
 // Called every frame
@@ -163,7 +182,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     PlayerInputComponent->BindAction("Sprint", IE_Released, this, &APlayerCharacter::EndSprint);
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
     PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-    PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &APlayerCharacter::DashInput);
+    PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &APlayerCharacter::Dash);
 
 }
 

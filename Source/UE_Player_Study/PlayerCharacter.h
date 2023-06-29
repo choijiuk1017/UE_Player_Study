@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+
 UCLASS()
 class UE_PLAYER_STUDY_API APlayerCharacter : public ACharacter
 {
@@ -17,6 +18,7 @@ private:
 	bool IsDash;
 	
 	float OriginSpeed;
+
 
 public:
 
@@ -38,6 +40,9 @@ protected:
 	//돌진 쿨타임
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 		float DashCooldown;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
+		float SpeedIncreaseRate;
 
 
 	//스프링 암 컴포넌트가 플레이어 뒤에 있는 카메라를 따라 감
@@ -72,8 +77,13 @@ protected:
 	//돌진 쿨타임 재설정 함수
 	void ResetDashCooldown();
 
+	//이동속도 증가 함수
+	void IncreaseDashSpeed(float DeltaTime) const;
 
+	//돌진 쿨타임 처리 변수
 	FTimerHandle DashCooldownTimerHandle;
+
+	
 
 public:	
 	// Called every frame
