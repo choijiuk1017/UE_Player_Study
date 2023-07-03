@@ -120,7 +120,7 @@ void APlayerCharacter::DashInput()
     if (IsDash)
     {
         Dash();
-
+        IncreaseDashSpeed(GetWorld()->GetDeltaSeconds());
         IsDash = false;
 
         GetWorldTimerManager().SetTimer(DashCooldownTimerHandle, this, &APlayerCharacter::ResetDashCooldown, DashCooldown, false);
@@ -133,9 +133,7 @@ void APlayerCharacter::Dash()
     float StartTime = GetWorld()->GetTimeSeconds();
 
     float EndTime = StartTime + DashDuration;
-    GetCharacterMovement()->MaxWalkSpeed = 2000.0f;
-
-    IncreaseDashSpeed(GetWorld()->GetDeltaSeconds());
+    GetCharacterMovement()->MaxWalkSpeed = 4000.0f;
 
     if (GetCharacterMovement()->MaxWalkSpeed == DashSpeed)
     {
