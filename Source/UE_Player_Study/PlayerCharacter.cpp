@@ -133,7 +133,7 @@ void APlayerCharacter::Dash()
     float StartTime = GetWorld()->GetTimeSeconds();
 
     float EndTime = StartTime + DashDuration;
-    GetCharacterMovement()->MaxWalkSpeed = 1500.0f;
+    GetCharacterMovement()->MaxWalkSpeed = 2000.0f;
 
     IncreaseDashSpeed(GetWorld()->GetDeltaSeconds());
 
