@@ -19,6 +19,8 @@ private:
 	
 	float OriginSpeed;
 
+	bool IsFalling;
+
 
 public:
 
@@ -79,6 +81,10 @@ protected:
 
 	//이동속도 증가 함수
 	void IncreaseDashSpeed(float DeltaTime) const;
+
+	void PlayFallingAnimation();
+
+	void UpdatePlayerState();
 
 	//돌진 쿨타임 처리 변수
 	FTimerHandle DashCooldownTimerHandle;

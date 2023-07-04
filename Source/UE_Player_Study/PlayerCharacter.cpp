@@ -54,6 +54,8 @@ APlayerCharacter::APlayerCharacter()
     //돌진 가능 확인 변수
     IsDash = true;
 
+    ISFalling = false;
+
     OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
 
     SpeedIncreaseRate = 500.0f;
@@ -160,11 +162,25 @@ void APlayerCharacter::IncreaseDashSpeed(float DeltaTime) const
     GetCharacterMovement()->MaxWalkSpeed += SpeedIncreaseRate * DeltaTime;
 }
 
+void APlayerCharacter::PlayFallingAnimation()
+{
+    ACharacter* PlayerCharacter = this;
+    UAnimMontage* Montage = LoadObject<UAnimMontage>(nullptr, TEXT("/Game/Animation/Falling_Montage"));
+    PlayerCharacter->PlayAnimMontage(Montage);
+}
+
+void APlayerCharacter::UpdatePlayerState()
+{
+    APlayerState CurrentState = GetPlayerState();
+}
+
+
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
 
 // Called to bind functionality to input
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
