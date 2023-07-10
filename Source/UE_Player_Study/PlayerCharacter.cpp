@@ -54,7 +54,7 @@ APlayerCharacter::APlayerCharacter()
     //돌진 가능 확인 변수
     IsDash = true;
 
-    ISFalling = false;
+    IsFalling = false;
 
     OriginSpeed = GetCharacterMovement()->MaxWalkSpeed;
 
@@ -169,10 +169,7 @@ void APlayerCharacter::PlayFallingAnimation()
     PlayerCharacter->PlayAnimMontage(Montage);
 }
 
-void APlayerCharacter::UpdatePlayerState()
-{
-    APlayerState CurrentState = GetPlayerState();
-}
+
 
 
 // Called every frame
